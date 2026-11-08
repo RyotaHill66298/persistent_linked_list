@@ -35,3 +35,10 @@ contents, so it can only be as hashable as those contents allow.
 Accessing `.head` or `.tail` on `Nil` raises `EmptyListError`, which is a
 subclass of `IndexError` so it integrates with ordinary sequence-error
 handling. Negative indexing and slices work and return tuple-backed results.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
